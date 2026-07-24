@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>シン・FAR論点厳選 | CH3 流動資産：現金・売掛金・棚卸資産</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+
+  :root{
+    --ink:#14213D;
+    --paper:#F6F4EE;
+    --paper2:#EFEBE1;
+    --gold:#B8862B;
+    --teal:#1F5F5B;
+    --warn:#9C3B2E;
+    --line:#D8D2C2;
+    --text:#232323;
+    --sub:#6B6558;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    font-family:'Noto Sans JP','メイリオ',sans-serif;
+    color:var(--text);
+    padding:28px 20px 60px;
+  }
+
+  .masthead{
+    max-width:980px;margin:0 auto 22px;
+    border-bottom:3px solid var(--ink);
+    padding-bottom:14px;
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:16px;flex-wrap:wrap;
+  }
+  .masthead .brand{font-size:11px;letter-spacing:.14em;color:var(--sub);text-transform:uppercase;}
+  .masthead h1{
+    font-family:'Noto Serif JP';font-weight:900;
+    font-size:24px;color:var(--ink);margin:2px 0 0;letter-spacing:.02em;
+  }
+  .masthead .en{font-size:12px;color:var(--sub);font-style:italic;margin-top:2px;}
+  .progress-wrap{text-align:right;min-width:150px;}
+  .progress-label{font-size:11px;color:var(--sub);margin-bottom:4px;}
+  .progress-bar{width:150px;height:6px;background:var(--paper2);border:1px solid var(--line);}
+  .progress-fill{height:100%;background:var(--teal);width:0%;transition:width .35s;}
+  .progress-count{font-size:13px;color:var(--ink);font-weight:700;margin-top:4px;}
+
+  .flowmap{
+    max-width:980px;margin:0 auto 12px;
+    background:var(--ink);color:var(--paper);
+    padding:16px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  .flowmap .step{
+    font-size:13px;font-weight:700;padding:5px 10px;border:1px solid rgba(246,244,238,.35);
+    white-space:nowrap;
+  }
+  .flowmap .arrow{color:var(--gold);font-weight:900;}
+  .flow-caption{max-width:980px;margin:0 auto 26px;font-size:11.5px;color:var(--sub);text-align:right;font-style:italic;}
+
+  .learning-map{max-width:980px;margin:0 auto 32px;overflow-x:auto;}
+  .learning-map table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  .learning-map th{
+    background:var(--ink);color:var(--paper);text-align:left;padding:8px 10px;font-weight:700;
+  }
+  .learning-map td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+  .learning-map tr:nth-child(even) td{background:var(--paper2);}
+  .learning-map .no{color:var(--gold);font-weight:900;width:28px;}
+  .learning-map .topic{font-weight:700;color:var(--ink);width:210px;}
+  .learning-map .rule{color:var(--teal);font-weight:700;white-space:nowrap;}
+
+  .grid{
+    max-width:980px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;
+  }
+  .card-slot{perspective:1600px;height:400px;}
+  .card{
+    position:relative;width:100%;height:100%;
+    transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1);
+    cursor:pointer;
+  }
+  .card-slot.flipped .card{transform:rotateY(180deg);}
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;
+    border:1px solid var(--ink);display:flex;flex-direction:column;
+    padding:16px 16px 14px;overflow:hidden;
+  }
+  .front{background:var(--paper);}
+  .back{background:var(--ink);color:var(--paper);transform:rotateY(180deg);}
+
+  .tag-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .no-badge{font-family:'Noto Serif JP';font-weight:900;font-size:18px;color:var(--gold);}
+  .done-badge{font-size:10px;letter-spacing:.08em;color:var(--sub);border:1px solid var(--line);padding:2px 6px;}
+  .front .done-badge.on{background:var(--teal);color:#fff;border-color:var(--teal);}
+
+  .front h2{
+    font-family:'Noto Serif JP';font-size:14.5px;font-weight:700;color:var(--ink);
+    margin:0 0 8px;line-height:1.3;
+  }
+  .q-label{font-size:10px;letter-spacing:.1em;color:var(--gold);font-weight:700;margin-bottom:6px;}
+  .front .question{
+    font-size:13.5px;font-weight:700;color:var(--warn);line-height:1.5;margin-bottom:10px;
+    padding:8px 10px;background:var(--paper2);border-left:3px solid var(--warn);
+  }
+  .front .why{font-size:12px;color:var(--sub);line-height:1.6;margin-bottom:10px;}
+  .front .rule-tag{
+    margin-top:auto;font-size:11px;color:var(--teal);font-weight:700;
+    border-top:1px dashed var(--line);padding-top:8px;
+  }
+  .flip-hint{font-size:10px;color:var(--sub);text-align:right;margin-top:6px;}
+
+  .back .core{font-size:12px;line-height:1.65;margin-bottom:8px;}
+  .back .conv{
+    font-size:11.5px;line-height:1.55;margin-bottom:7px;padding-bottom:7px;
+    border-bottom:1px solid rgba(246,244,238,.15);
+  }
+  .back .conv:last-of-type{border-bottom:none;}
+  .back .conv .x{color:#E0A79A;}
+  .back .conv .o{color:#9FD8B5;}
+  .back .summary{
+    font-size:11.5px;font-weight:700;line-height:1.5;color:#fff;
+    background:rgba(255,255,255,.08);padding:7px 9px;margin-top:auto;border-left:3px solid var(--gold);
+  }
+
+  footer{max-width:980px;margin:36px auto 0;font-size:11px;color:var(--sub);text-align:center;}
+</style>
+</head>
+<body>
+
+  <div class="masthead">
+    <div>
+      <div class="brand">シン・FAR論点厳選</div>
+      <h1>CH3 流動資産：現金・売掛金・棚卸資産</h1>
+      <div class="en">Decision Framework — 問題を見た瞬間に「どのルールで判断するか」を決める</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label">習得進捗</div>
+      <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+      <div class="progress-count" id="pc">0 / 8</div>
+    </div>
+  </div>
+
+  <div class="flowmap">
+    <div class="step">事実を拾う</div><div class="arrow">→</div>
+    <div class="step">条件を判定</div><div class="arrow">→</div>
+    <div class="step">金額を測る</div><div class="arrow">→</div>
+    <div class="step">表示先を決める</div>
+  </div>
+  <div class="flow-caption">現金は換金性ではなく自由に使用できるか、銀行勘定調整はBank側とBook側の未反映項目を切り分ける。</div>
+
+  <div class="learning-map">
+    <table>
+      <tr><th class="no">No.</th><th class="topic">論点</th><th>判定ルール（暗記フック）</th></tr>
+      <tr><td class="no">01</td><td class="topic">Cash & Cash Equivalents</td><td class="rule">自由・3か月・ほぼ現金</td></tr>
+      <tr><td class="no">02</td><td class="topic">Bank Reconciliation</td><td class="rule">会社が知る→Bank、銀行が知る→Book</td></tr>
+      <tr><td class="no">03</td><td class="topic">A/R・Sales Discounts</td><td class="rule">Tradeは値札を消す、Cashは支払時期で決める</td></tr>
+      <tr><td class="no">04</td><td class="topic">Bad Debts・Allowance</td><td class="rule">Salesは費用を出す、Receivablesは残高を合わせる</td></tr>
+      <tr><td class="no">05</td><td class="topic">Factoring・債権譲渡</td><td class="rule">隔離・自由・戻せないでSale</td></tr>
+      <tr><td class="no">06</td><td class="topic">Inventory Ownership・Cutoff</td><td class="rule">場所を見るな、Titleを見ろ</td></tr>
+      <tr><td class="no">07</td><td class="topic">Inventory Cost Flow</td><td class="rule">割る→差を取る→掛け戻す</td></tr>
+      <tr><td class="no">08</td><td class="topic">Inventory Measurement</td><td class="rule">原則NRV、LIFOはRCを上下から挟む</td></tr>
+    </table>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>クリック / タップでカードが反転します。裏面を見た論点は自動でチェックが付きます。 © 2026 @nekokabuchanx</footer>
+
+<script>
+const cards = [
+{
+  no:"01", title:"Cash & Cash Equivalents", rule:"自由・3か月・ほぼ現金",
+  q:"残存期間が3か月以内ならCash equivalentである。",
+  why:"購入後に残存期間が短くなった長期債券は該当しない。",
+  conv:[
+    ["残存期間が3か月以内ならCash equivalent","取得時点の満期が3か月以内が基準"],
+    ["Sinking fundの現金もCashに含める","長期債務返済目的なら非流動資産へ区分"],
+    ["Commercial paperは常に投資勘定","取得時満期3か月以内ならCash equivalent"]
+  ],
+  summary:"Cash＝硬貨・紙幣・預金・小切手。CE＝取得時満期3か月以内のTB・CP・MMF。"
+},
+{
+  no:"02", title:"Bank Reconciliation", rule:"会社が知る→Bank、銀行が知る→Book",
+  q:"Outstanding checkはBook balanceから減算する。",
+  why:"会社は発行時にCashを減らしており、未反映なのは銀行側。",
+  conv:[
+    ["Outstanding checkをBookから減算","Bank balanceから減算する"],
+    ["Deposit in transitをBookへ加算","Bank balanceへ加算する（会社は記帳済み）"],
+    ["NSF checkをBank側から減算","Book balanceから減算する（銀行は既に取消済み）"]
+  ],
+  summary:"Bank：DIT＋／Outstanding check－。Book：取立＋／手数料・NSF－。"
+},
+{
+  no:"03", title:"A/R・Sales Discounts", rule:"Tradeは値札を消す、Cashは支払時期で決める",
+  q:"10/5/2のChain discountは17%引きとして計算する。",
+  why:"Chain discountは各段階の残額に対して適用する。",
+  conv:[
+    ["10/5/2を17%引きで計算","0.90×0.95×0.98を順に掛ける"],
+    ["Trade discountをSales discount expenseに計上","当初から請求額・売上高に含めない"],
+    ["Net methodで期限徒過を無視","Discounts forfeitedを認識する"]
+  ],
+  summary:"Chain discountは掛け算。Gross＝割引前、Net＝割引後で当初認識。"
+},
+{
+  no:"04", title:"Bad Debts・Allowance", rule:"Salesは費用を出す、Receivablesは残高を合わせる",
+  q:"Sales approachでは期首Allowanceを差し引いてExpenseを求める。",
+  why:"Sales approachはI/S重視で、費用額を直接算定する。",
+  conv:[
+    ["Sales法で期首Allowanceを差し引く","Sales×率を当期Expenseとしてそのまま計上"],
+    ["Receivables法でA/R×率をExpenseとする","それはEnding allowanceの目標残高（差額だけがExpense）"],
+    ["Write-off時にBad debt expenseを計上","Allowanceを借方、A/Rを貸方（費用は見積時に認識済み）"]
+  ],
+  summary:"Sales法＝Credit sales×率＝Expense。A/R法・Aging＝期末Allowance目標残高。"
+},
+{
+  no:"05", title:"Factoring・債権譲渡", rule:"隔離・自由・戻せないでSale",
+  q:"Recourse付きの譲渡なら必ずSecured borrowingになる。",
+  why:"Recourse obligationは別途FVで負債認識する。",
+  conv:[
+    ["Recourse付きなら必ずBorrowing","3要件（Isolation／Pledge自由／No control）を満たせばSaleになり得る"],
+    ["Factor holdbackをLossに含める","回収可能なHoldback receivableは資産として残す"],
+    ["Cash＝A/R－Feeだけ","Fee・Interest・Holdback等を控除して分解する"]
+  ],
+  summary:"Saleの3要件＝Isolation／Pledge自由／No control。Holdbackは資産、Recourseは負債。"
+},
+{
+  no:"06", title:"Inventory Ownership・Cutoff", rule:"場所を見るな、Titleを見ろ",
+  q:"In transitの在庫は常にSellerの在庫として扱う。",
+  why:"発送時点でTitleが移転している場合がある。",
+  conv:[
+    ["In transitは常にSeller在庫","FOB shipping pointならBuyer在庫"],
+    ["FOB destinationを発送時に仕入計上","到着時にBuyerが認識（期末未着ならSeller在庫）"],
+    ["Consigneeが保管する在庫をConsignee計上","Consignorが販売まで保有（受託者はCommissionのみ認識）"]
+  ],
+  summary:"FOB SP＝発送時／FOB Dest＝到着時。ConsignmentはConsignor在庫。"
+},
+{
+  no:"07", title:"Inventory Cost Flow", rule:"割る→差を取る→掛け戻す",
+  q:"LIFOでは期末在庫に最新の仕入原価を残す。",
+  why:"最後に入ったものが先に売れるという仮定のため。",
+  conv:[
+    ["LIFO期末在庫に最新仕入を残す","最も古いCost layerが期末に残る"],
+    ["DVLIFOでCurrent-year costを直接比較","まずPrice indexでBase-year costへ換算する"],
+    ["Layer減少を当年指数で再評価","古いLayerの指数を維持して取り崩す（新しいLayerからLiquidation）"]
+  ],
+  summary:"FIFO＝古いCOGS／LIFO＝新しいCOGS。物価上昇時LIFO：COGS↑、NI・Tax↓。"
+},
+{
+  no:"08", title:"Inventory Measurement", rule:"原則NRV、LIFOはRCを上下から挟む",
+  q:"LIFOもFIFOと同様にCost vs NRVで評価する。",
+  why:"LIFO・RetailはReplacement costをCeilingとFloorの範囲へ収める方式が別にある。",
+  conv:[
+    ["LIFOもCost vs NRV","LIFO／RetailはCost vs Designated market（LCM）"],
+    ["Ceiling＝Selling price","NRV＝Selling price－Disposal costs"],
+    ["Retail原価率＝Ending cost÷Ending retail","Goods availableのCost÷Retailで算定"]
+  ],
+  summary:"FIFO等＝LCNRV／LIFO・Retail＝LCM。RCはCeiling NRVとFloor（NRV－Profit）の間。"
+}
+];
+
+const grid = document.getElementById('grid');
+cards.forEach((c,i)=>{
+  const slot = document.createElement('div');
+  slot.className='card-slot';
+  slot.id='slot-'+i;
+  slot.innerHTML = `
+    <div class="card">
+      <div class="face front">
+        <div class="tag-row">
+          <div class="no-badge">${c.no}</div>
+          <div class="done-badge" id="badge-${i}">未学習</div>
+        </div>
+        <h2>${c.title}</h2>
+        <div class="q-label">QUESTION（正誤判定）</div>
+        <div class="question">${c.q}</div>
+        <div class="why">${c.why}</div>
+        <div class="rule-tag">RULE｜${c.rule}</div>
+        <div class="flip-hint">タップして解説へ ▸</div>
+      </div>
+      <div class="face back">
+        <div class="q-label">誤答 → 正解へ変換</div>
+        ${c.conv.map(p=>`<div class="conv"><span class="x">×</span> ${p[0]}<br><span class="o">○</span> ${p[1]}</div>`).join('')}
+        <div class="summary">${c.summary}</div>
+      </div>
+    </div>
+  `;
+  slot.addEventListener('click', ()=>{
+    slot.classList.toggle('flipped');
+    if(slot.classList.contains('flipped')){
+      document.getElementById('badge-'+i).textContent='済';
+      document.getElementById('badge-'+i).classList.add('on');
+      updateProgress();
+    }
+  });
+  grid.appendChild(slot);
+});
+
+function updateProgress(){
+  const done = document.querySelectorAll('.done-badge.on').length;
+  document.getElementById('pf').style.width = (done/cards.length*100)+'%';
+  document.getElementById('pc').textContent = done+' / '+cards.length;
+}
+</script>
+</body>
+</html>
