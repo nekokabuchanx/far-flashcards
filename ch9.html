@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>USCPA・FAR論点まとめ CH9 フラッシュカード</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+  :root{
+    --ink:#14213D; --paper:#F6F4EE; --paper2:#EFEBE1;
+    --gold:#B8862B; --teal:#1F5F5B; --warn:#9C3B2E;
+    --line:#D8D2C2; --text:#232323; --sub:#6B6558;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);font-family:'Noto Sans JP','メイリオ',sans-serif;color:var(--text);padding:28px 20px 60px;}
+  .masthead{max-width:980px;margin:0 auto 22px;border-bottom:3px solid var(--ink);padding-bottom:14px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;}
+  .masthead .brand{font-size:11px;letter-spacing:.14em;color:var(--sub);text-transform:uppercase;}
+  .masthead h1{font-family:'Noto Serif JP';font-weight:900;font-size:24px;color:var(--ink);margin:2px 0 0;letter-spacing:.02em;}
+  .masthead .en{font-size:12px;color:var(--sub);font-style:italic;margin-top:2px;}
+  .progress-wrap{text-align:right;min-width:150px;}
+  .progress-label{font-size:11px;color:var(--sub);margin-bottom:4px;}
+  .progress-bar{width:150px;height:6px;background:var(--paper2);border:1px solid var(--line);}
+  .progress-fill{height:100%;background:var(--teal);width:0%;transition:width .35s;}
+  .progress-count{font-size:13px;color:var(--ink);font-weight:700;margin-top:4px;}
+  .flowmap{max-width:980px;margin:0 auto 12px;background:var(--ink);color:var(--paper);padding:16px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .flowmap .step{font-size:13px;font-weight:700;padding:5px 10px;border:1px solid rgba(246,244,238,.35);white-space:nowrap;}
+  .flowmap .arrow{color:var(--gold);font-weight:900;}
+  .flow-caption{max-width:980px;margin:0 auto 26px;font-size:11.5px;color:var(--sub);text-align:right;font-style:italic;}
+  .learning-map{max-width:980px;margin:0 auto 32px;overflow-x:auto;}
+  .learning-map table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  .learning-map th{background:var(--ink);color:var(--paper);text-align:left;padding:8px 10px;font-weight:700;}
+  .learning-map td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+  .learning-map tr:nth-child(even) td{background:var(--paper2);}
+  .learning-map .no{color:var(--gold);font-weight:900;width:28px;}
+  .learning-map .topic{font-weight:700;color:var(--ink);width:220px;}
+  .learning-map .rule{color:var(--teal);font-weight:700;white-space:nowrap;}
+  .grid{max-width:980px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;}
+  .card-slot{perspective:1600px;height:400px;}
+  .card{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1);cursor:pointer;}
+  .card-slot.flipped .card{transform:rotateY(180deg);}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--ink);display:flex;flex-direction:column;padding:16px 16px 14px;overflow:hidden;}
+  .front{background:var(--paper);}
+  .back{background:var(--ink);color:var(--paper);transform:rotateY(180deg);}
+  .tag-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .no-badge{font-family:'Noto Serif JP';font-weight:900;font-size:18px;color:var(--gold);}
+  .done-badge{font-size:10px;letter-spacing:.08em;color:var(--sub);border:1px solid var(--line);padding:2px 6px;}
+  .front .done-badge.on{background:var(--teal);color:#fff;border-color:var(--teal);}
+  .front h2{font-family:'Noto Serif JP';font-size:14.5px;font-weight:700;color:var(--ink);margin:0 0 8px;line-height:1.3;}
+  .q-label{font-size:10px;letter-spacing:.1em;color:var(--gold);font-weight:700;margin-bottom:6px;}
+  .front .question{font-size:13.5px;font-weight:700;color:var(--warn);line-height:1.5;margin-bottom:10px;padding:8px 10px;background:var(--paper2);border-left:3px solid var(--warn);}
+  .front .why{font-size:12px;color:var(--sub);line-height:1.6;margin-bottom:10px;}
+  .front .rule-tag{margin-top:auto;font-size:11px;color:var(--teal);font-weight:700;border-top:1px dashed var(--line);padding-top:8px;}
+  .flip-hint{font-size:10px;color:var(--sub);text-align:right;margin-top:6px;}
+  .back .core{font-size:12px;line-height:1.65;margin-bottom:8px;}
+  .back .conv{font-size:11.5px;line-height:1.55;margin-bottom:7px;padding-bottom:7px;border-bottom:1px solid rgba(246,244,238,.15);}
+  .back .conv:last-of-type{border-bottom:none;}
+  .back .conv .x{color:#E0A79A;}
+  .back .conv .o{color:#9FD8B5;}
+  .back .summary{font-size:11.5px;font-weight:700;line-height:1.5;color:#fff;background:rgba(255,255,255,.08);padding:7px 9px;margin-top:auto;border-left:3px solid var(--gold);}
+  footer{max-width:980px;margin:36px auto 0;font-size:11px;color:var(--sub);text-align:center;}
+</style>
+</head>
+<body>
+  <div class="masthead">
+    <div>
+      <div class="brand">シン・FAR論点厳選</div>
+      <h1>CH9 Leases：Lessee Accounting</h1>
+      <div class="en">Decision Framework — 問題を見た瞬間に「どのルールで判断するか」を決める</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label">習得進捗</div>
+      <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+      <div class="progress-count" id="pc">0 / 6</div>
+    </div>
+  </div>
+  <div class="flowmap">
+    <div class="step">事実を拾う</div><div class="arrow">→</div>
+    <div class="step">条件を判定</div><div class="arrow">→</div>
+    <div class="step">金額を測る</div><div class="arrow">→</div>
+    <div class="step">表示先を決める</div>
+  </div>
+  <div class="flow-caption">借手は5条件のいずれかを満たせばFinance lease、満たさなければOperating leaseに分類する</div>
+  <div class="learning-map">
+    <table>
+      <tr><th class="no">No.</th><th class="topic">論点</th><th>判定ルール（暗記フック）</th></tr>
+      <tr><td class="no">01</td><td class="topic">Lease Classification</td><td class="rule">移・買・期・価・専</td></tr>
+      <tr><td class="no">02</td><td class="topic">Lease Term・Improvements</td><td class="rule">Termは確実Option込み、改良は短い方</td></tr>
+      <tr><td class="no">03</td><td class="topic">Initial Lease Liability</td><td class="rule">何を・いつ・何期・何率</td></tr>
+      <tr><td class="no">04</td><td class="topic">Initial ROU Asset</td><td class="rule">ROU＝LL＋前払＋IDC－Incentive</td></tr>
+      <tr><td class="no">05</td><td class="topic">Operating Lease</td><td class="rule">負債は利息法、費用は定額、ROUは差額</td></tr>
+      <tr><td class="no">06</td><td class="topic">Finance Lease</td><td class="rule">Financeは負債と資産を別走行</td></tr>
+    </table>
+  </div>
+  <div class="grid" id="grid"></div>
+  <footer>クリック / タップでカードが反転します。裏面を見た論点は自動でチェックが付きます。 © 2026 @nekokabuchanx</footer>
+<script>
+const cards = [
+{
+  no:"01", title:"Lease Classification", rule:"移・買・期・価・専",
+  q:"Purchase optionがあればFinance — 正しい？",
+  why:"単に選択権があるだけでは要件を満たさない。",
+  conv:[
+    ["Purchase optionがあればFinance","行使がReasonably certainであることが必要（単に選択権があるだけでは要件を満たさない）"],
+    ["Lease term 25%ならMajor part","一般に75%が目安（開始日が耐用年数末期に近い場合も注意する）"],
+    ["PVがFVより大幅に低くてもFinance","Substantially allが必要（一般に90%は合理的な目安にすぎない）"]
+  ],
+  summary:"所有権移転を実質的に示す5条件のうち1つでも満たせばFinance、全てNoならOperatingとなる。"
+},
+{
+  no:"02", title:"Lease Term・Improvements", rule:"Termは確実Option込み、改良は短い方",
+  q:"3年＋確実な2年延長でもTermは3年 — 正しい？",
+  why:"Reasonably certainな延長期間を含める。",
+  conv:[
+    ["3年＋確実な2年延長でもTermは3年","5年（Reasonably certainな延長期間を含める）"],
+    ["12か月契約なら常にShort-term","Purchase optionや延長Optionを確認（Lease termが実質12か月超なら免除対象外）"],
+    ["ImprovementをAsset lifeだけで償却","原則Shorter of life or lease term（退去後に便益を得られないため）"]
+  ],
+  summary:"Lease termはNoncancelable期間にReasonably certainなOptionを加えて求め、Short-termは12か月以内かつPurchase optionなしの場合に限られる。"
+},
+{
+  no:"03", title:"Initial Lease Liability", rule:"何を・いつ・何期・何率",
+  q:"Commencement当日初回支払でもOrdinary — 正しい？",
+  why:"Cash flow timingをTimelineで確認する。",
+  conv:[
+    ["Commencement当日初回支払でもOrdinary","Annuity dueまたは即時支払を分離（Cash flow timingをTimelineで確認する）"],
+    ["売上連動RentをLiabilityへ含める","発生時Expense（Index／Rate以外の変動支払は開始日PVから除外する）"],
+    ["Lessor implicit rate不明でも推定使用","Lessee IBR（Implicit rateを容易に決定できない場合の代替率）"]
+  ],
+  summary:"開始日Lease liabilityはIncluded paymentsのPVであり、支払timingに応じて期末Ordinary・期首Dueを使い分ける。"
+},
+{
+  no:"04", title:"Initial ROU Asset", rule:"ROU＝LL＋前払＋IDC－Incentive",
+  q:"ROU＝LLは常に成立 — 正しい？",
+  why:"Prepayment・IDC・Incentiveで差が生じる。",
+  conv:[
+    ["ROU＝LLは常に成立","調整項目がなければ同額（Prepayment・IDC・Incentiveで差が生じる）"],
+    ["契約交渉Legal feeはすべてIDC","契約締結がなければ発生しない費用のみ（Would-have-been-incurred costは除外する）"],
+    ["Lease incentiveをROUへ加算","控除（Lessorから受ける便益は借手の使用権原価を下げる）"]
+  ],
+  summary:"開始日ROU assetはLease liabilityにPrepayment・IDCを加え、Incentiveを控除して求める。"
+},
+{
+  no:"05", title:"Operating Lease", rule:"負債は利息法、費用は定額、ROUは差額",
+  q:"OperatingでもROU reduction＝Principal — 正しい？",
+  why:"LiabilityとAssetは異なる速度で減少する。",
+  conv:[
+    ["OperatingでもROU reduction＝Principal","Expense－Interest（LiabilityとAssetは異なる速度で減少する）"],
+    ["Single expenseにInterestを追加","InterestはSingle expenseに内包（P/Lを二重計上しない）"],
+    ["Cash全額でLiabilityを減らす","Cash－InterestだけPrincipal reduction（実効金利法で負債を更新する）"]
+  ],
+  summary:"Operating leaseは定額のSingle lease expenseを認識し、ROU reductionはExpense－Interestで逆算する。"
+},
+{
+  no:"06", title:"Finance Lease", rule:"Financeは負債と資産を別走行",
+  q:"FinanceもSingle lease expense — 正しい？",
+  why:"P/L表示と費用PatternがOperatingと異なる。",
+  conv:[
+    ["FinanceもSingle lease expense","Interest＋Amortizationを別認識（P/L表示と費用PatternがOperatingと異なる）"],
+    ["Title transferでもShorter period","Underlying asset useful life（借手が資産便益を耐用年数全体で得るため）"],
+    ["Purchase optionがCertainでもLease term","Asset useful lifeを使用（実質的な所有を反映する）"]
+  ],
+  summary:"Finance leaseはInterestとROU amortizationを別々に認識し、所有権移転が確実ならAsset useful lifeで償却する。"
+},
+];
+
+const grid = document.getElementById('grid');
+cards.forEach((c,i)=>{
+  const slot = document.createElement('div');
+  slot.className='card-slot';
+  slot.id='slot-'+i;
+  slot.innerHTML = `
+    <div class="card">
+      <div class="face front">
+        <div class="tag-row">
+          <div class="no-badge">${c.no}</div>
+          <div class="done-badge" id="badge-${i}">未学習</div>
+        </div>
+        <h2>${c.title}</h2>
+        <div class="q-label">QUESTION（正誤判定）</div>
+        <div class="question">${c.q}</div>
+        <div class="why">${c.why}</div>
+        <div class="rule-tag">RULE｜${c.rule}</div>
+        <div class="flip-hint">タップして解説へ ▸</div>
+      </div>
+      <div class="face back">
+        <div class="q-label">誤答 → 正解へ変換</div>
+        ${c.conv.map(p=>`<div class="conv"><span class="x">×</span> ${p[0]}<br><span class="o">○</span> ${p[1]}</div>`).join('')}
+        <div class="summary">${c.summary}</div>
+      </div>
+    </div>
+  `;
+  slot.addEventListener('click', ()=>{
+    slot.classList.toggle('flipped');
+    if(slot.classList.contains('flipped')){
+      document.getElementById('badge-'+i).textContent='済';
+      document.getElementById('badge-'+i).classList.add('on');
+      updateProgress();
+    }
+  });
+  grid.appendChild(slot);
+});
+
+function updateProgress(){
+  const done = document.querySelectorAll('.done-badge.on').length;
+  document.getElementById('pf').style.width = (done/cards.length*100)+'%';
+  document.getElementById('pc').textContent = done+' / '+cards.length;
+}
+</script>
+</body>
+</html>
