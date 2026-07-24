@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>USCPA・FAR論点まとめ CH6 フラッシュカード</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+
+  :root{
+    --ink:#14213D;
+    --paper:#F6F4EE;
+    --paper2:#EFEBE1;
+    --gold:#B8862B;
+    --teal:#1F5F5B;
+    --warn:#9C3B2E;
+    --line:#D8D2C2;
+    --text:#232323;
+    --sub:#6B6558;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    font-family:'Noto Sans JP','メイリオ',sans-serif;
+    color:var(--text);
+    padding:28px 20px 60px;
+  }
+
+  .masthead{
+    max-width:980px;margin:0 auto 22px;
+    border-bottom:3px solid var(--ink);
+    padding-bottom:14px;
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:16px;flex-wrap:wrap;
+  }
+  .masthead .brand{font-size:11px;letter-spacing:.14em;color:var(--sub);text-transform:uppercase;}
+  .masthead h1{
+    font-family:'Noto Serif JP';font-weight:900;
+    font-size:24px;color:var(--ink);margin:2px 0 0;letter-spacing:.02em;
+  }
+  .masthead .en{font-size:12px;color:var(--sub);font-style:italic;margin-top:2px;}
+  .progress-wrap{text-align:right;min-width:150px;}
+  .progress-label{font-size:11px;color:var(--sub);margin-bottom:4px;}
+  .progress-bar{width:150px;height:6px;background:var(--paper2);border:1px solid var(--line);}
+  .progress-fill{height:100%;background:var(--teal);width:0%;transition:width .35s;}
+  .progress-count{font-size:13px;color:var(--ink);font-weight:700;margin-top:4px;}
+
+  .flowmap{
+    max-width:980px;margin:0 auto 12px;
+    background:var(--ink);color:var(--paper);
+    padding:16px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  .flowmap .step{
+    font-size:13px;font-weight:700;padding:5px 10px;border:1px solid rgba(246,244,238,.35);
+    white-space:nowrap;
+  }
+  .flowmap .arrow{color:var(--gold);font-weight:900;}
+  .flow-caption{max-width:980px;margin:0 auto 26px;font-size:11.5px;color:var(--sub);text-align:right;font-style:italic;}
+
+  .learning-map{max-width:980px;margin:0 auto 32px;overflow-x:auto;}
+  .learning-map table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  .learning-map th{
+    background:var(--ink);color:var(--paper);text-align:left;padding:8px 10px;font-weight:700;
+  }
+  .learning-map td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+  .learning-map tr:nth-child(even) td{background:var(--paper2);}
+  .learning-map .no{color:var(--gold);font-weight:900;width:28px;}
+  .learning-map .topic{font-weight:700;color:var(--ink);width:220px;}
+  .learning-map .rule{color:var(--teal);font-weight:700;white-space:nowrap;}
+
+  .grid{
+    max-width:980px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;
+  }
+  .card-slot{perspective:1600px;height:400px;}
+  .card{
+    position:relative;width:100%;height:100%;
+    transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1);
+    cursor:pointer;
+  }
+  .card-slot.flipped .card{transform:rotateY(180deg);}
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;
+    border:1px solid var(--ink);display:flex;flex-direction:column;
+    padding:16px 16px 14px;overflow:hidden;
+  }
+  .front{background:var(--paper);}
+  .back{background:var(--ink);color:var(--paper);transform:rotateY(180deg);}
+
+  .tag-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .no-badge{font-family:'Noto Serif JP';font-weight:900;font-size:18px;color:var(--gold);}
+  .done-badge{font-size:10px;letter-spacing:.08em;color:var(--sub);border:1px solid var(--line);padding:2px 6px;}
+  .front .done-badge.on{background:var(--teal);color:#fff;border-color:var(--teal);}
+
+  .front h2{
+    font-family:'Noto Serif JP';font-size:14.5px;font-weight:700;color:var(--ink);
+    margin:0 0 8px;line-height:1.3;
+  }
+  .q-label{font-size:10px;letter-spacing:.1em;color:var(--gold);font-weight:700;margin-bottom:6px;}
+  .front .question{
+    font-size:13.5px;font-weight:700;color:var(--warn);line-height:1.5;margin-bottom:10px;
+    padding:8px 10px;background:var(--paper2);border-left:3px solid var(--warn);
+  }
+  .front .why{font-size:12px;color:var(--sub);line-height:1.6;margin-bottom:10px;}
+  .front .rule-tag{
+    margin-top:auto;font-size:11px;color:var(--teal);font-weight:700;
+    border-top:1px dashed var(--line);padding-top:8px;
+  }
+  .flip-hint{font-size:10px;color:var(--sub);text-align:right;margin-top:6px;}
+
+  .back .core{font-size:12px;line-height:1.65;margin-bottom:8px;}
+  .back .conv{
+    font-size:11.5px;line-height:1.55;margin-bottom:7px;padding-bottom:7px;
+    border-bottom:1px solid rgba(246,244,238,.15);
+  }
+  .back .conv:last-of-type{border-bottom:none;}
+  .back .conv .x{color:#E0A79A;}
+  .back .conv .o{color:#9FD8B5;}
+  .back .summary{
+    font-size:11.5px;font-weight:700;line-height:1.5;color:#fff;
+    background:rgba(255,255,255,.08);padding:7px 9px;margin-top:auto;border-left:3px solid var(--gold);
+  }
+
+  footer{max-width:980px;margin:36px auto 0;font-size:11px;color:var(--sub);text-align:center;}
+</style>
+</head>
+<body>
+
+  <div class="masthead">
+    <div>
+      <div class="brand">シン・FAR論点厳選</div>
+      <h1>CH6 Intangible Assets</h1>
+      <div class="en">Decision Framework — 問題を見た瞬間に「どのルールで判断するか」を決める</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label">習得進捗</div>
+      <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+      <div class="progress-count" id="pc">0 / 5</div>
+    </div>
+  </div>
+
+  <div class="flowmap">
+    <div class="step">事実を拾う</div><div class="arrow">→</div>
+    <div class="step">条件を判定</div><div class="arrow">→</div>
+    <div class="step">金額を測る</div><div class="arrow">→</div>
+    <div class="step">表示先を決める</div>
+  </div>
+  <div class="flow-caption">無形資産は物理的実体を持たない非金融資産で、外部購入と内部創出で当初測定が異なる。</div>
+
+  <div class="learning-map">
+    <table>
+      <tr><th class="no">No.</th><th class="topic">論点</th><th>判定ルール（暗記フック）</th></tr>
+      <tr><td class="no">01</td><td class="topic">Initial Recognition</td><td class="rule">買えばCost、自製は原則Expense</td></tr>
+      <tr><td class="no">02</td><td class="topic">R&D・Patent</td><td class="rule">発明はExpense、権利の紙と勝訴はAsset</td></tr>
+      <tr><td class="no">03</td><td class="topic">Useful Life・Amortization</td><td class="rule">Definiteは割る、Indefiniteは測る</td></tr>
+      <tr><td class="no">04</td><td class="topic">Impairment</td><td class="rule">期限ありはUで門、期限なしはFVへ直行</td></tr>
+      <tr><td class="no">05</td><td class="topic">Cloud Computing Arrangements</td><td class="rule">License→Stage→Direct cost→Term</td></tr>
+    </table>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>クリック / タップでカードが反転します。裏面を見た論点は自動でチェックが付きます。 © 2026 @nekokabuchanx</footer>
+
+<script>
+const cards = [
+{
+  no:"01", title:"Initial Recognition", rule:"買えばCost、自製は原則Expense",
+  q:"Advertisingで生じたBrand valueを資産計上する。",
+  why:"自己創設ブランドは原価を他の事業支出と区分できない。",
+  conv:[
+    ["Advertisingで生じたBrand valueを資産","発生時Expenseとする"],
+    ["外部購入IntangibleをSellerのBVで計上","Buyerの取得原価（購入対価＋直接費）を基礎とする"],
+    ["Good reputationを単独Goodwillとして認識","GoodwillはBusiness combinationでのみ認識（自己創設Goodwillは計上しない）"]
+  ],
+  summary:"Intangible＝物理的実体なし・非金融。Identifiable＝SeparateまたはLegal right。"
+},
+{
+  no:"02", title:"R&D・Patent", rule:"発明はExpense、権利の紙と勝訴はAsset",
+  q:"New ideaのDevelopment costをPatentへ資産化する。",
+  why:"発明の創出コストと法的権利の取得コストを分離する。",
+  conv:[
+    ["New ideaのDevelopment costをPatentへ","R&D expenseとする"],
+    ["Patent application legal feeをR&D","Patent costへ資産化（権利取得への直接帰属）"],
+    ["Defense costは常にExpense","Successful defenseは資産化（権利価値の維持・延長）"]
+  ],
+  summary:"R&D＝原則発生時Expense。Application legal fee＝Capitalize。"
+},
+{
+  no:"03", title:"Useful Life・Amortization", rule:"Definiteは割る、Indefiniteは測る",
+  q:"PatentのLegal life 10年なら10年で償却する。",
+  why:"便益が失われる短い期間を優先する。",
+  conv:[
+    ["PatentのLegal life 10年なら10年償却","Economic life 5年なら5年（短い方を優先）"],
+    ["Registered trademarkは期限があるので必ず償却","名目的費用で無期限更新ならIndefiniteになり得る"],
+    ["Indefiniteは会計処理不要","償却せずAnnual impairmentを実施する"]
+  ],
+  summary:"Definite＝Systematic amortization。Life＝経済・法・更新を総合判断。"
+},
+{
+  no:"04", title:"Impairment", rule:"期限ありはUで門、期限なしはFVへ直行",
+  q:"IndefiniteもUndiscounted CFでGate判定する。",
+  why:"長期性資産の2段階モデルを流用しない。",
+  conv:[
+    ["IndefiniteもUndiscounted CFでGate判定","Carrying amountとFair valueを直接比較する"],
+    ["No amortization＝価値は下がらない","Annual impairmentが必要（毎年の価値検証）"],
+    ["Definite-lifeを毎年必ずテスト","Triggerがある時のみ実施（不利な市場変化等の兆候）"]
+  ],
+  summary:"Definite＝Trigger→Undiscounted CF→FV。Indefinite＝Annual・BV vs FV。"
+},
+{
+  no:"05", title:"Cloud Computing Arrangements", rule:"License→Stage→Direct cost→Term",
+  q:"CCA関連支出はすべて資産化する。",
+  why:"間接Consulting・Training・運用費は発生時費用となる。",
+  conv:[
+    ["CCA関連支出はすべて資産化","Configuration・Customization等の直接導入費のみ資産化"],
+    ["Employee payrollは常にExpense","導入活動へ直接従事した分は資産化する"],
+    ["償却期間＝解約不能期間だけ","行使が合理的に確実な延長期間を含める"]
+  ],
+  summary:"Customization＋直接Payroll＝Capitalize。Indirect consulting・Training＝Expense。"
+}
+];
+
+const grid = document.getElementById('grid');
+cards.forEach((c,i)=>{
+  const slot = document.createElement('div');
+  slot.className='card-slot';
+  slot.id='slot-'+i;
+  slot.innerHTML = `
+    <div class="card">
+      <div class="face front">
+        <div class="tag-row">
+          <div class="no-badge">${c.no}</div>
+          <div class="done-badge" id="badge-${i}">未学習</div>
+        </div>
+        <h2>${c.title}</h2>
+        <div class="q-label">QUESTION（正誤判定）</div>
+        <div class="question">${c.q}</div>
+        <div class="why">${c.why}</div>
+        <div class="rule-tag">RULE｜${c.rule}</div>
+        <div class="flip-hint">タップして解説へ ▸</div>
+      </div>
+      <div class="face back">
+        <div class="q-label">誤答 → 正解へ変換</div>
+        ${c.conv.map(p=>`<div class="conv"><span class="x">×</span> ${p[0]}<br><span class="o">○</span> ${p[1]}</div>`).join('')}
+        <div class="summary">${c.summary}</div>
+      </div>
+    </div>
+  `;
+  slot.addEventListener('click', ()=>{
+    slot.classList.toggle('flipped');
+    if(slot.classList.contains('flipped')){
+      document.getElementById('badge-'+i).textContent='済';
+      document.getElementById('badge-'+i).classList.add('on');
+      updateProgress();
+    }
+  });
+  grid.appendChild(slot);
+});
+
+function updateProgress(){
+  const done = document.querySelectorAll('.done-badge.on').length;
+  document.getElementById('pf').style.width = (done/cards.length*100)+'%';
+  document.getElementById('pc').textContent = done+' / '+cards.length;
+}
+</script>
+</body>
+</html>
